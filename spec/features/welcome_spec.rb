@@ -13,10 +13,10 @@ describe "Welcome" do
     page.body.should include "Welcome to Cartoque"
   end
 
-  it "includes stats about applications" do
-    Application.create!(name: "app-01")
-    Application.create!(name: "app-02")
+  it "includes stats about softwares" do
+    Software.create!(name: "app-01")
+    Software.create!(name: "app-02")
     visit root_path
-    page.body.should include "2 applications"
+    page.body.should include "2 softwares"
   end
 end

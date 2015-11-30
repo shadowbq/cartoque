@@ -58,7 +58,7 @@ class Server
   belongs_to :maintainer,       class_name: "Company", inverse_of: :maintained_servers
   belongs_to :hypervisor,       class_name: "Server",  inverse_of: :virtual_machines
   has_many   :virtual_machines, class_name: "Server", inverse_of: :hypervisor
-  has_and_belongs_to_many :application_instances
+  has_and_belongs_to_many :software_instances
   has_many :backup_jobs, dependent: :destroy
   has_and_belongs_to_many :backup_exclusions
   has_and_belongs_to_many :licenses, inverse_of: :servers

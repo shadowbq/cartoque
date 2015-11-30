@@ -15,7 +15,7 @@
     <tbody>
       <%= tabular_errors @server %>
       <%= f.input :name, required: true, wrapper_class: 'th', input_html: { style: "width:10em;" } %>
-      <tr class="wrapper server_applications">
+      <tr class="wrapper server_softwaress">
         <td colspan="2"><label for="server[description]" class="input"><%= t(:description) %> :</label><br/><%= f.text_area :description, size: "30x4" %></td>
       </tr>
       <%= f.input :operating_system_id, collection: ancestry_options(OperatingSystem.scoped.arrange(order: [:name, :asc])){|i| "#{'-'*i.depth} #{i.name}"}, as: "select" %>
@@ -115,13 +115,13 @@
   </table>
   </div>
 
-  <div id="server_applications" class="span4">
+  <div id="server_softwaress" class="span4">
   <table class="inputs full">
     <thead>
-      <tr><th colspan="2"><%= t(:application_instances) %></th></tr>
+      <tr><th colspan="2"><%= t(:software_instances) %></th></tr>
     </thead>
     <tbody>
-      <%= f.input :application_instance_ids, collection: ApplicationInstance.all.map{|i| [i.full_name, i.id]}, as: "multiselect" %>
+      <%= f.input :software_instance_ids, collection: SoftwareInstance.all.map{|i| [i.full_name, i.id]}, as: "multiselect" %>
     </tbody>
   </table>
   </div>

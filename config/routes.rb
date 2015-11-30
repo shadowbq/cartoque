@@ -41,7 +41,7 @@ Cartoque::Application.routes.draw do
   resources :servers do
     collection { get 'maintenance' }
   end
-  resources :applications
+  resources :softwares
 
   # Plugins/engines
   Dir.glob(File.expand_path("../../vendor/plugins/*/config/routes.rb",__FILE__)).each do |routefile|
@@ -109,7 +109,7 @@ Cartoque::Application.routes.draw do
   root to: "welcome#index"
 
   # catch ActionController#RoutingError
-  match '*a', to: 'Application#render_404'
+  #match '*a', to: 'Application#render_404'
 
   # See how all your routes lay out with "rake routes"
 

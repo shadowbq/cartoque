@@ -1,6 +1,6 @@
-class PopulateApplicationsAndServersSlugs < Mongoid::Migration
+class PopulateSoftwaresAndServersSlugs < Mongoid::Migration
   def self.up
-    Application.all.each do |app|
+    Software.all.each do |app|
       app.send(:generate_slug!)
       app.save
     end

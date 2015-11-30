@@ -28,7 +28,7 @@ describe "I18n" do
   describe "when authenticated" do
     before do
       @user = FactoryGirl.create(:user)
-      @controller = ApplicationsController.new
+      @controller = SoftwaresController.new
       @controller.request    = ActionController::TestRequest.new
       @controller.stub(:current_user).and_return(@user)
       I18n.locale = I18n.default_locale

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe BackupExclusionsController do
+
   login_user
 
   before do

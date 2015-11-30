@@ -1,0 +1,29 @@
+<% title t(:softwares) %>
+
+<div id="softwares" class="span12 items_list">
+
+<%= action_links do %>
+  <div class="contextual">
+    <%= link_to image_tag("file_extension_pdf.png", size: "16x16"), softwares_path(params.merge(format: "pdf")) %>
+  </div>
+  <%= link_to t(:add_an_software), new_software_path %>
+<% end %>
+
+<table class="pretty list center">
+  <%= form_tag softwares_path(params), id: "filters", method: :get do -%>
+    <%= hidden_sort_fields %>
+    <% (controller.scopes_configuration || {}).keys.each do |scope| %>
+      <%= hidden_field_tag scope, params[scope] %>
+    <% end %>
+  <tr class="filters fixed-size">
+    <td><%= text_field_tag "search", params[:search] %></td>
+    <td><span id="softwares_counter" class="counter"><%= @softwares.count %></span></td>
+  </tr>
+  <% end %>
+
+  <tbody id="softwares_list" class="long-list">
+    <%= render 'list' %>
+  </tbody>
+</table>
+
+</div>

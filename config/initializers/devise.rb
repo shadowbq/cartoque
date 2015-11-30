@@ -185,7 +185,7 @@ Devise.setup do |config|
   # ==> Configuration for :token_authenticatable
   # Defines name of the authentication token params key
   # config.token_authentication_key = :auth_token
-  config.token_authentication_key = :api_token
+  #### (deprecrated) config.token_authentication_key = :api_token
 
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
@@ -233,4 +233,18 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(scope: :user).unshift :some_external_strategy
   # end
+end
+
+Devise::TokenAuthenticatable.setup do |config|
+  # set the authentication key name used by this module,
+  # defaults to :auth_token
+  config.token_authentication_key = :api_token
+
+  # enable reset of the authentication token before the model is saved,
+  # defaults to false
+  config.should_reset_authentication_token = true
+
+  # enables the setting of the authentication token - if not already - before the model is saved,
+  # defaults to false
+  config.should_ensure_authentication_token = true
 end

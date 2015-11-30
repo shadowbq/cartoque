@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "Servers" do
   let(:user) { FactoryGirl.create(:user) }
   let!(:server) { FactoryGirl.create(:server, name: "srv-01") }
-  let(:application) { Application.create!(name: "app-01") }
-  let(:app_instance) { ApplicationInstance.create!(name: "prod", application: application) }
+  let(:software) { Software.create!(name: "app-01") }
+  let(:app_instance) { SoftwareInstance.create!(name: "prod", software: software) }
   let(:datacenter) { FactoryGirl.create(:datacenter) }
   let(:foreign_datacenter) { FactoryGirl.create(:datacenter, name: "Tokyo") }
 

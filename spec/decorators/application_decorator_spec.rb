@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe ApplicationDecorator do
+describe SoftwareDecorator do
   before do
-    @a = ApplicationDecorator.new(nil) #dummy object to test methods...
+    @a = SoftwareDecorator.new(nil) #dummy object to test methods...
   end
 
   describe "I18n methods" do

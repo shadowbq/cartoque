@@ -242,11 +242,11 @@ describe Server do
     end
   end
 
-  describe "#application_instances" do
-    it "can have many application instance ids" do
+  describe "#software_instances" do
+    it "can have many software instance ids" do
       srv = FactoryGirl.create(:server)
-      srv.application_instance_ids.should eq []
-      srv.application_instances.should eq []
+      srv.software_instance_ids.should eq []
+      srv.software_instances.should eq []
     end
   end
 

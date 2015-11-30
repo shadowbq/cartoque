@@ -1,0 +1,62 @@
+<%= simple_form_for(@software) do |f| %>
+
+  <%= action_links do %>
+    <%= f.button :submit, class: "btn btn-primary" %>
+    <%= t(:or) %> <%= link_to t(:back_to_the_list), softwares_path %>
+    <% unless @software.new_record? %>
+      | <%= link_to t(:show), @software %>
+    <% end %>
+  <% end %>
+
+  <div id="software_general" class="span6">
+  <table class="inputs full">
+    <tbody>
+      <%= tabular_errors @software %>
+      <%= f.input :name, required: true, wrapper_class: "th", input_html: { style: "width:9em;" } %>
+      <%= f.input :description, as: :text, input_html: { size: "48x4" } %>
+      <%= f.input :ci_identifier %>
+      <!--
+      <tr class="input select optional">
+        <td class="label">
+          <label class="select optional" for="software_contacts"><%= t(:contacts) %></label>
+        </td>
+        <td class="multiselect">
+          <% Role.all.each do |role| %>
+            <div class="control-label" style="margin-top:6px;"><%= role.name %></div>
+            <%= text_field_tag "software[relationships_map][#{role.id}]", nil, class: "token-input-select",
+                               data: { update_url: autocomplete_contacts_path,
+                                       pre_populate: @software.contacts_with_role(role).map{|c| {id: c.id, name: c.full_name} } } %>
+          <% end %>
+        </td>
+      </tr>
+      -->
+    </tbody>
+  </table>
+  </div>
+
+
+  <div id="software_instances" class="span6">
+  <table class="inputs full">
+    <thead>
+      <tr>
+        <th colspan="2"><%= t(:software_instances) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="input string optional">
+        <td class="content instance-forms" colspan="2">
+          <% f.object.software_instances << SoftwareInstance.new if f.object.software_instances.none? %>
+          <%= f.simple_fields_for :software_instances, f.object.sorted_software_instances do |instance_form| %>
+            <%= render 'software_instance_fields', f: instance_form %>
+          <% end %>
+          <p class="add-field">
+          <%= link_to_add_fields image_tag("new_button.png", size: "14x15", class:"inline")+t(:add_an_software_instance).downcase, f,
+                                 :software_instances, klass: SoftwareInstance %>
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+<% end %>

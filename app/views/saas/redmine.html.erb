@@ -10,7 +10,7 @@
 <table class="pretty list">
   <tr class="fix-on-scroll">
     <th><%= t(:server) %></th>
-    <th><%= t(:application_instance) %></th>
+    <th><%= t(:software_instance) %></th>
     <th><%= t(:manager) %></th>
     <th><%= t(:version) %></th>
     <% if show_plugins %><th><%= t(:plugins) %></th><% end %>
@@ -29,6 +29,7 @@
   </tr>
   <% instances.each do |instance| %>
   <tr>
+    <% # FIXME appli.12 %> 
     <td><%= link_to instance.name, "http://#{instance.name}.projet.appli.i2/" %></td>
     <td class="center"><%= instance.admin %></td>
     <td class="center"><%= instance.version %></td>

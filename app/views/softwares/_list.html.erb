@@ -1,0 +1,18 @@
+<tr class="fix-on-scroll">
+  <%= sortable_th "name", nil, style: "width:15em" %>
+  <th><%= t(:description) %></th>
+</tr>
+<% for software in @softwares %>
+  <% cache ["list", software] do %>
+    <tr class="has-opaques">
+      <td>
+        <div class="contextual opaque">
+          <%= links_for software %>
+          <%= link_to_delete software %>
+        </div>
+        <%= link_to software.name, software %>
+      </td>
+      <td><%= software.description %></td>
+    </tr>
+  <% end %>
+<% end %>

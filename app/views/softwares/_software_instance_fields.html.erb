@@ -1,0 +1,30 @@
+<table class="fields instance-fields full">
+  <tr>
+    <td class="label"><%= f.label :name, class: "input" %></td>
+    <td>
+      <%= f.text_field :name, style: "width:5em; font-weight:bold;" %>
+      <%= link_to_remove_fields image_tag("delete.png", size: "16x16")+t(:delete_this_software_instance), f, confirm: true %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label"><%= f.label :authentication_method, class: "input" %></td>
+    <td>
+      <%= f.input_field :authentication_method, as: :select, collection: collection_for_authentication_methods, include_blank: false %>
+    </td>
+  </tr>
+  <tr>
+    <td class="label"><%= f.label :software_urls, class: "input" %></td>
+    <td>
+      <%= f.simple_fields_for :software_urls do |url_form| %>
+        <%= render 'software_url_fields', f: url_form %>
+      <% end %>
+      <span class="add-field"><%= link_to_add_fields image_tag("new_button.png", size: "14x15", class:"inline")+t(:add).downcase, f, :software_urls %></span>
+    </td>
+  </tr>
+  <tr>
+    <td class="label"><%= f.label :servers, class: "input" %></td>
+    <td class="multiselect">
+      <%= f.input_field :server_ids, collection: Server.active.order_by(:name.asc), as: :multiselect %>
+    </td>
+  </tr>
+</table>

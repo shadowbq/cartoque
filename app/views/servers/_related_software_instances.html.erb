@@ -1,0 +1,14 @@
+<% @server.software_instances.each do |instance| %>
+<div class="related-ci related-software-instances">
+  <%= link_to instance.software do %>
+  <div class="informations">
+    <div class="contextual tiny"><%= instance.name %></div>
+    <h3><%= instance.software %></h3>
+    <div class="details">
+      <%= pluralize(instance.servers.count, t(:server).downcase) %> /
+      <%= pluralize(instance.software_urls.count, t(:url)) %>
+    </div>
+  </div>
+  <% end %>
+</div>
+<% end %>

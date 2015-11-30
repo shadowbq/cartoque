@@ -4,8 +4,8 @@ describe "Servers API" do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:server) { Server.create!(name: "srv-01") }
   let(:server_with_os) { os = OperatingSystem.create(name: "Debian"); Server.create!(name: "srv-debian", operating_system: os) }
-  let(:application) { Application.create!(name: "app-01") }
-  let(:app_instance) { ApplicationInstance.create!(name: "prod", application: application) }
+  let(:software) { Software.create!(name: "app-01") }
+  let(:app_instance) { SoftwareInstance.create!(name: "prod", software: software) }
 
   before { page.set_headers("HTTP_X_API_TOKEN" => user.authentication_token) }
   after { page.set_headers("HTTP_X_API_TOKEN" => nil) }

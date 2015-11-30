@@ -13,13 +13,13 @@
     <li class="home"><%= link_to content_tag(:i, nil, class: "icon-home"), root_path,
                                  class: "img", title: t(:home) %></li>
   <% if user_signed_in? %>
-    <li class="applications"><%= link_to t(:applications), applications_path %></li>
+    <li class="sofwares"><%= link_to t(:softwares), softwares_path %></li>
     <li class="servers"><%= link_to t(:servers), servers_path %></li>
     <li class="platform has-submenu">
       <%= link_to_javascript %(#{t(:platform)} <span class="arrow"></span>).html_safe, "return false" %>
       <div class="large-submenu submenu-3" style="margin-left:-70px">
         <ul style="float:left">
-          <li class="application-servers-items title"><%= t(:application_server) %></li>
+          <li class="software-servers-items title"><%= t(:software_server) %></li>
           <!--<li><a href="?"><%= t(:load_balancers) %></a></li>-->
           <!--<li><a href="?">Apache HTTP</a></li>-->
           <li class="tomcats"><%= link_to "Tomcat / J2EE", tomcats_path %></li>

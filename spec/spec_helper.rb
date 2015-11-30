@@ -24,6 +24,7 @@ Spork.prefork do
   require 'capybara/rspec'
   require 'capybara/rails'
   require 'devise/test_helpers'
+  require 'devise'
   require 'draper/test/rspec_integration'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
@@ -77,7 +78,9 @@ Spork.prefork do
     # a tiny patch to database_cleaner for moped adapter
     # it doesn't clean collections with 'system' in its name,
     # while it should only exclude collections beginning with 'system'
-    require 'database_cleaner/moped_truncation_patch'
+    # FIXME - This should be fixed in database_cleaner
+    # https://github.com/DatabaseCleaner/database_cleaner/blob/master/lib/database_cleaner/moped/truncation_base.rb
+    # require 'database_cleaner/moped_truncation_patch'
 
     # factory girl invocation methods
     config.include FactoryGirl::Syntax::Methods
@@ -86,11 +89,12 @@ Spork.prefork do
     config.include Capybara::RSpecMatchers, type: :decorator
 
     # include devise helpers in controller specs
-    config.include Devise::TestHelpers, type: :controller
-    config.extend ControllerMacros, type: :controller
+    config.include Devise::TestHelpers, :type => :controller
+    config.extend ControllerMacros, :type => :controller
 
     # include warden helpers in integration specs
     config.include Warden::Test::Helpers, type: :feature
+    
   end
 end
 

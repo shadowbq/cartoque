@@ -1,0 +1,6 @@
+$('input[type="hidden"]#sort').attr("value","<%= escape_javascript(sort_column) %>");
+$('input[type="hidden"]#direction').attr("value","<%= escape_javascript(sort_direction) %>");
+$("#softwares_list").html("<%= escape_javascript(render("list")) %>");
+$("#softwares_counter").html("<%= @softwares.count %>");
+fixTableHeaders();
+$("html, body").animate({ scrollTop: 0 }, 200);

@@ -108,6 +108,6 @@
   <%= render 'related_cronjobs' if @server.cronjobs.any? %>
 </div>
 
-<div id="server-application-relations" class="span3 show">
-  <%= render 'related_application_instances' if @server.application_instances.any? %>
+<div id="server-software-relations" class="span3 show">
+  <%= render 'related_software_instances' if @server.software_instances.any? %>
 </div>

@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
 # Core framework
-gem 'rails', '~> 3.2.13'
+gem 'rails', '~> 4.0'
 gem 'rake'
 
 # Rails 3's asset pipeline
-gem 'json', '~> 1.8.2'
-gem 'sass-rails', '3.2.5'
+gem 'json'
+gem 'sass-rails', '~> 4.0'
 gem 'coffee-rails'
 gem 'uglifier'
 # JS Runtime
@@ -14,32 +14,34 @@ gem 'therubyracer'
 
 # App's gems
 gem 'inherited_resources'
-gem 'simple_form', '~> 1.5.2'
+gem 'simple_form', '~> 3.0'
 gem 'show_for'
 gem 'has_scope'
 gem 'jquery-rails', '>= 1.0.12'
-gem 'pdfkit', '~> 0.5.3'
+gem 'pdfkit', '>= 0.5.3'
 gem 'wkhtmltopdf-binary'
 gem 'storcs', '~> 0.0.3'
 gem 'hashie'
 gem 'nokogiri'
 gem 'draper', '~> 1.0'
-gem 'deface', '= 0.7.2'
+#gem 'deface', '= 0.7.2'
 gem 'rabl', '>= 0.5.3'
 # Mongo / data manipulation
-gem 'mongoid', '~> 3.0.5'
+gem 'mongoid', '~> 4'
+gem 'bson_ext'
 gem 'mongoid-ancestry'
 gem 'mongoid_rails_migrations'
 gem 'mongoid_alize' #denormalizartion
-gem 'mongoid_slug', '> 2.0.0'
+gem 'mongoid_slug'
 # Styles
 gem 'bootstrap-sass'
 gem 'font-awesome-sass-rails'
 gem 'lograge'
 # Authentication
-gem 'omniauth', '>= 1.0.0'
-gem 'omniauth-cas', '>= 0.0.6'
+gem 'omniauth'
+gem 'omniauth-cas', '=1.0.1'
 gem 'devise'
+gem 'devise-token_authenticatable', '~> 0.4'
 
 gem 'thin'
 
