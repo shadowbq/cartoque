@@ -1,9 +1,10 @@
 require 'fast_helper'
+#require 'spec_helper'
 require 'd3_utils'
 
 describe D3Utils do
   it "raises an exception if instantiated" do
-    lambda { D3Utils.new }.should raise_error
+    lambda { D3Utils.new }.should raise_error(RuntimeError)
   end
 
   describe ".hash_to_d3format" do

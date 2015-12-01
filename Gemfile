@@ -23,7 +23,7 @@ gem 'wkhtmltopdf-binary'
 gem 'storcs', '~> 0.0.3'
 gem 'hashie'
 gem 'nokogiri'
-gem 'draper', '~> 1.0'
+gem 'draper', '~> 2.0'
 #gem 'deface', '= 0.7.2'
 gem 'rabl', '>= 0.5.3'
 # Mongo / data manipulation

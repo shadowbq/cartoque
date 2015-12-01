@@ -5,8 +5,8 @@ describe DatabaseInstance do
   let(:database2) { Database.create!(name: "srv-02", type: "postgres") }
 
   it "has at least a name and a database" do
-    lambda { database.database_instances.create! }.should raise_error
-    lambda { database.database_instances.create!(name: "blah", databases: nil) }.should raise_error
+    lambda { database.database_instances.create! }.should raise_error(Mongoid::Errors::Validations)
+    lambda { database.database_instances.create!(name: "blah", databases: nil) }.should raise_error(Mongoid::Errors::Validations)
     lambda { database.database_instances.create!(name: "blah") }.should_not raise_error
     database.database_instances.first.databases.should == {}
     lambda { database.database_instances.create!(name: "bleh", databases: {}) }.should_not raise_error
@@ -14,7 +14,7 @@ describe DatabaseInstance do
 
   it "guarantees uniqueness of name in a single database" do
     lambda { database.database_instances.create!(name: "blah", databases: {}) }.should_not raise_error
-    lambda { database.database_instances.create!(name: "blah", databases: {}) }.should raise_error
+    lambda { database.database_instances.create!(name: "blah", databases: {}) }.should raise_error(Mongoid::Errors::Validations)
     lambda { database2.database_instances.create!(name: "blah", databases: {}) }.should_not raise_error
   end
 

@@ -10,7 +10,7 @@ end
 module SimpleForm
   module Components
     module LabelInput
-      def label_input_with_proc
+      def label_input_with_proc(wrapper_options)
         if label_input_builder && label_input_builder.is_a?(Proc)
           label_input_builder.call(label,input).html_safe
         else
@@ -20,7 +20,7 @@ module SimpleForm
       end
       alias_method_chain :label_input, :proc
 
-      def label_input_builder
+      def label_input_builder(wrapper_options)
         options[:label_input_builder] || SimpleForm.label_input_builder
       end
     end
@@ -30,7 +30,7 @@ end
 module SimpleForm
   module Inputs
     class BooleanInput
-      def label_input
+      def label_input(wrapper_options)
         super
       end
     end
