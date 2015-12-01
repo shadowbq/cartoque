@@ -1,7 +1,9 @@
 class Contactable
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::MultiParameterAttributes
+  # FIXME
+  # http://roodyruby.tumblr.com/post/67651747866/multi-parameter-attributes-support-for-mongoid-40
+  #include Mongoid::MultiParameterAttributes
   include Mongoid::Alize
 
   field :comment,   type: String

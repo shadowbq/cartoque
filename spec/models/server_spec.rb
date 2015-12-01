@@ -166,7 +166,7 @@ describe Server do
       it "finds server by name in priority" do
         srv = Server.find_or_generate("rake-server")
         srv.should eq server
-        srv.just_created.should be_false
+        srv.just_created.should be_falsey
       end
 
       it "generates a new server if no match with name and identifier" do
@@ -174,7 +174,7 @@ describe Server do
         server.should be_nil
         lambda { server = Server.find_or_generate("rake-server3") }.should change(Server, :count).by(+1)
         server.should be_persisted
-        server.just_created.should be_true
+        server.just_created.should be_truthy
       end
     end
   end
@@ -183,13 +183,13 @@ describe Server do
     it "is truthy only if it's in a rack that is marked as stock" do
       server = FactoryGirl.create(:server)
       rack = FactoryGirl.create(:rack1)
-      server.stock?.should be_false
+      server.stock?.should be_falsey
       server.physical_rack = rack
-      rack.stock?.should be_false
-      server.stock?.should be_false
+      rack.stock?.should be_falsey
+      server.stock?.should be_falsey
       rack.status = PhysicalRack::STATUS_STOCK
-      rack.stock?.should be_true
-      server.stock?.should be_true
+      rack.stock?.should be_truthy
+      server.stock?.should be_truthy
     end
   end
 
@@ -233,12 +233,12 @@ describe Server do
     it "requires having an compatible os defined" do
       srv = FactoryGirl.create(:server)
       srv.operating_system.should be_blank
-      srv.can_be_managed_with_puppet?.should be_false
+      srv.can_be_managed_with_puppet?.should be_falsey
       sys = OperatingSystem.create(name: "Ubuntu 11.10")
       srv.update_attribute(:operating_system_id, sys.id.to_s)
-      srv.reload.can_be_managed_with_puppet?.should be_false
+      srv.reload.can_be_managed_with_puppet?.should be_falsey
       sys.update_attribute(:managed_with_puppet, true)
-      srv.reload.can_be_managed_with_puppet?.should be_true
+      srv.reload.can_be_managed_with_puppet?.should be_truthy
     end
   end
 

@@ -78,5 +78,6 @@ group :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'rspec-activemodel-mocks'
+  gem 'rspec-collection_matchers'
   gem 'capybara'
 end

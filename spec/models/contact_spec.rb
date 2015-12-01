@@ -66,7 +66,7 @@ describe Contact do
     it "returns everything if parameter is blank" do
       Contact.like("").to_a.should =~ [@contact1, @contact2]
     end
-    
+
     it "filters contacts by first_name, last_name, and job_position" do
       Contact.like("James").to_a.should =~ [@contact2]
       Contact.like("Doe").to_a.should =~ [@contact1]
@@ -110,14 +110,14 @@ describe Contact do
     it "propagates #internal value when auto-creating a company" do
       company = Company.create(name: "World Company")
       Contact.create(last_name: "Smith", company_name: "World Company", internal: true)
-      company.reload.internal.should be_false
+      company.reload.internal.should be_falsey
       Contact.create(last_name: "Parker", company_name: "Universe Company", internal: false)
-      Company.where(name: "Universe Company").first.internal.should be_false
+      Company.where(name: "Universe Company").first.internal.should be_falsey
       #but
       #WARNING: it only works if internal field is set before company_name, which is the case in the HTML form
       #TODO: fix it :)
       Contact.create(last_name: "Goldberg", internal: true, company_name: "Our team")
-      Company.where(name: "Our team").first.internal.should be_true
+      Company.where(name: "Our team").first.internal.should be_truthy
     end
   end
 end
