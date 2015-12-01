@@ -8,7 +8,7 @@ class Company < Contactable
 
   validates_presence_of :name
 
-  scope :maintainers, where(is_maintainer: true).order_by([:name.asc])
+  scope :maintainers, ->{ where(is_maintainer: true).order_by([:name.asc]) }
 
   def to_s
     name

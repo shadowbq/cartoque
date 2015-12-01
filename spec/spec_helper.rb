@@ -41,6 +41,10 @@ Spork.prefork do
     # config.mock_with :rr
     config.mock_with :rspec
 
+    # Rspec 3 Deprecation Fixes
+    config.infer_spec_type_from_file_location!
+    config.expect_with(:rspec) { |c| c.syntax = :should }
+
     # Focus mode
     config.filter_run focus: true
     config.run_all_when_everything_filtered = true
@@ -94,7 +98,7 @@ Spork.prefork do
 
     # include warden helpers in integration specs
     config.include Warden::Test::Helpers, type: :feature
-    
+
   end
 end
 

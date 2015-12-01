@@ -4,7 +4,7 @@ class Role
 
   field :name, type: String
   field :position, type: Integer
-  
+
   def initialize(*args)
     super
     if self.position.blank?
@@ -16,5 +16,5 @@ class Role
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  default_scope order_by(:position.asc)
+  default_scope ->{ order_by(:position.asc) }
 end

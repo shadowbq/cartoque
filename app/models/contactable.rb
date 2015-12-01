@@ -1,7 +1,7 @@
 class Contactable
   include Mongoid::Document
   include Mongoid::Timestamps
-  #include Mongoid::MultiParameterAttributes
+  include Mongoid::MultiParameterAttributes
   include Mongoid::Alize
 
   field :comment,   type: String
@@ -17,7 +17,7 @@ class Contactable
   accepts_nested_attributes_for :address_infos, reject_if: lambda{|a| a[:value].blank? }, allow_destroy: true
 
   scope :with_internals, proc{|show_internals| show_internals ? scoped : where(internal: false) }
-  scope :emailable, where(:email_infos.elem_match => { value: // })
+  scope :emailable, ->{ where(:email_infos.elem_match => { value: // }) }
 
   def contact_infos
     email_infos + website_infos + phone_infos + address_infos

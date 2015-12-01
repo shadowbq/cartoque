@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BackupExclusionsController do
+describe BackupExclusionsController, :type => :controller do
 
   login_user
 

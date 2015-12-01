@@ -1,7 +1,7 @@
 class Server
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::MultiParameterAttributes
+  #include Mongoid::MultiParameterAttributes
   include Mongoid::Alize
   include Acts::Ipaddress
   include ConfigurationItem
@@ -72,11 +72,13 @@ class Server
   has_many :ipaddresses, foreign_key: 'server_id', dependent: :destroy, autosave: true
   has_many :server_extensions, dependent: :destroy, autosave: true
   has_many :tomcats, dependent: :destroy
+  # FIXME : Alize denormalizartion is failing
+  # FIXME : RAILS4 
   #denormalized fields
-  alize :physical_rack, :full_name
-  alize :operating_system, :name
-  alize :maintainer, :name, :email_value, :phone_value
-  
+  #alize :physical_rack, :full_name
+  #alize :operating_system, :name
+  #alize :maintainer, :name, :email_value, :phone_value
+
   before_save :update_site!
 
   accepts_nested_attributes_for :ipaddresses,
@@ -91,11 +93,11 @@ class Server
 
   attr_accessor :just_created
 
-  scope :active, where(status: STATUS_ACTIVE)
-  scope :inactive, where(status: STATUS_INACTIVE)
-  scope :real_servers, where(:network_device.ne => true)
-  scope :network_devices, where(network_device: true)
-  scope :hypervisor_hosts, where(is_hypervisor: true)
+  scope :active, ->{ where(status: STATUS_ACTIVE) }
+  scope :inactive, ->{ where(status: STATUS_INACTIVE) }
+  scope :real_servers, ->{ where(:network_device.ne => true) }
+  scope :network_devices, ->{ where(network_device: true) }
+  scope :hypervisor_hosts, ->{ where(is_hypervisor: true) }
   scope :by_rack, proc {|rack_id| where(physical_rack_id: rack_id) }
   scope :by_site, proc {|site_id| where(site_id: site_id) }
   scope :by_location, proc {|location|
