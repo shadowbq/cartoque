@@ -43,11 +43,15 @@ Spork.prefork do
 
     # Rspec 3 Deprecation Fixes
     config.infer_spec_type_from_file_location!
-    config.expect_with(:rspec) { |c| c.syntax = :should }
+    config.expect_with(:rspec) { |expects| expects.syntax = [:should, :expect] }
+    config.mock_with(:rspec) { |mocks| mocks.syntax = :should }
 
     # Focus mode
     config.filter_run focus: true
     config.run_all_when_everything_filtered = true
+    # it 'can do so and so', focus: true do
+      # This is the only test that will run
+    # end
 
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     #config.fixture_path = "#{::Rails.root}/spec/fixtures"

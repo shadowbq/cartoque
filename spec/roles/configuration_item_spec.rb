@@ -10,12 +10,12 @@ class CIModel
   include ConfigurationItem
 end
 
-describe ConfigurationItem do
+RSpec.describe ConfigurationItem do
   describe 'missing pre-requisite' do
     it 'raises if the class does not respond to has_and_belongs_to_many' do
-      expect do
+      expect {
         NotAMongoidClass1.send(:include, ConfigurationItem)
-      end.to raise_error ConfigurationItem::MissingPrerequisite, /has_and_belongs/
+      }.to raise_error ConfigurationItem::MissingPrerequisite, /has_and_belongs/
     end
 
     it 'raises if the class does not respond to has_many' do

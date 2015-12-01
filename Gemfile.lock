@@ -217,6 +217,10 @@ GEM
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
       rspec-mocks (~> 3.4.0)
+    rspec-activemodel-mocks (1.0.2)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      rspec-mocks (>= 2.99, < 4.0)
     rspec-core (3.4.1)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -325,6 +329,7 @@ DEPENDENCIES
   rake
   rb-inotify
   rspec
+  rspec-activemodel-mocks
   rspec-rails
   sass-rails (~> 4.0)
   show_for

@@ -77,5 +77,6 @@ group :test do
   # gem 'cover_me', :platforms => :mri_19
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'rspec-activemodel-mocks'
   gem 'capybara'
 end
