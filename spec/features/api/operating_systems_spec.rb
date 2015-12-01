@@ -10,25 +10,25 @@ describe "Operating Systems API" do
   describe "GET /operating_systems.json" do
     it "gets all operating_systems" do
       visit operating_systems_path(format: "json")
-      page.status_code.should == 200
+      expect(page.status_code).to eq(200)
       res = JSON.parse(page.body) rescue nil
-      res.should_not be nil
-      res.keys.should == ["operating_systems"]
-      res["operating_systems"].should have(1).operating_system
+      expect(res).not_to be nil
+      expect(res.keys).to eq(["operating_systems"])
+      expect(res["operating_systems"].size).to eq(1)
       sys = res["operating_systems"].first
-      sys["name"].should == "Debian"
+      expect(sys["name"]).to eq("Debian")
     end
   end
 
   describe "GET /operating_systems/:id" do
     it "shows a specific operating_system" do
       visit operating_system_path(id: system.id.to_s, format: "json")
-      page.status_code.should == 200
+      expect(page.status_code).to eq(200)
       res = JSON.parse(page.body) rescue nil
-      res.should_not be nil
-      res.keys.should == ["operating_system"]
+      expect(res).not_to be nil
+      expect(res.keys).to eq(["operating_system"])
       sys = res["operating_system"]
-      sys["name"].should == "Debian"
+      expect(sys["name"]).to eq("Debian")
     end
   end
 end

@@ -9,9 +9,9 @@ describe "General API" do
 
   it "forces format to json if api token + no format specified" do
     visit servers_path
-    page.status_code.should == 200
-    page.response_headers['Content-Type'].should match %r(^application/json)
+    expect(page.status_code).to eq(200)
+    expect(page.response_headers['Content-Type']).to match %r(^application/json)
     res = JSON.parse(page.body) rescue nil
-    res.should_not be nil
+    expect(res).not_to be nil
   end
 end

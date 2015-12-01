@@ -7,14 +7,14 @@ describe Setting do
     end
 
     it "returns the #cas_server if set" do
-      Setting.update_attribute(:cas_server, "http://cas.example.com").should be_true
-      Setting.safe_cas_server.should eq "http://cas.example.com"
+      expect(Setting.update_attribute(:cas_server, "http://cas.example.com")).to be_truthy
+      expect(Setting.safe_cas_server).to eq "http://cas.example.com"
     end
 
     it "returns the default value if #cas_server is blank or nearly blanked" do
-      Setting.update_attribute(:cas_server, " ").should be_true
-      Setting.safe_cas_server.should eq @default_value
-      @default_value.should_not be_blank
+      expect(Setting.update_attribute(:cas_server, " ")).to be_truthy
+      expect(Setting.safe_cas_server).to eq @default_value
+      expect(@default_value).not_to be_blank
     end
   end
 end

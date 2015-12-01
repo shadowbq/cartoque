@@ -6,7 +6,7 @@ describe 'Error pages' do
 
   it "catches DocumentNotFound errors" do
     visit '/softwares/4a17dec32007653b18000001'
-    page.status_code.should == 404
-    page.should have_content "These are not the droids you're looking for"
+    expect(page.status_code).to eq(404)
+    expect(page).to have_content "These are not the droids you're looking for"
   end
 end

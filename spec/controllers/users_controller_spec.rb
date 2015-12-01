@@ -19,7 +19,7 @@ describe UsersController do
   end
 
   it "creates user" do
-    lambda{ post :create, user: {"name"=>"john"} }.should change(User, :count)
+    expect{ post :create, user: {"name"=>"john"} }.to change(User, :count)
     assert_redirected_to users_path
   end
 
@@ -34,7 +34,7 @@ describe UsersController do
   end
 
   it "destroys user" do
-    lambda{ delete :destroy, id: @user.to_param }.should change(User, :count).by(-1)
+    expect{ delete :destroy, id: @user.to_param }.to change(User, :count).by(-1)
     assert_redirected_to users_path
   end
 end

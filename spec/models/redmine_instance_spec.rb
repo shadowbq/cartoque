@@ -10,7 +10,7 @@ end
 describe RedmineInstance do
   describe "RedmineInstance.all" do
     it "returns fake directory" do
-      RedmineInstance.dir.should include("spec/data/redmine")
+      expect(RedmineInstance.dir).to include("spec/data/redmine")
     end
 
     it "returns content of files" do

@@ -19,7 +19,7 @@ describe SoftwaresController do
   end
 
   it "creates software" do
-    lambda{ post :create, software: {"name" => "app-01"} }.should change(Software, :count)
+    expect{ post :create, software: {"name" => "app-01"} }.to change(Software, :count)
     assert_redirected_to software_path(assigns(:software))
   end
 
@@ -36,16 +36,16 @@ describe SoftwaresController do
     app_inst.save
     @software.reload
     get :show, id: @software.to_param, format: :xml
-    response.body.should have_selector :css, "software>_id", @software.id.to_s
+    expect(response.body).to have_selector :css, "software>_id", @software.id.to_s
     assert_equal 1, @software.software_instances.count
-    response.body.should have_selector :css, "software>software-instances>software-instance", 1
+    expect(response.body).to have_selector :css, "software>software-instances>software-instance", 1
     assert_equal 2, @software.software_instances.first.servers.count
-    response.body.should have_selector :css, "software>software-instances>software-instance>servers>server", 2
+    expect(response.body).to have_selector :css, "software>software-instances>software-instance>servers>server", 2
   end
 
   it "accesss an software through its identifier" do
     get :show, id: @software.to_param, format: :xml
-    response.body.should include "<_id>#{@software.id}</_id>"
+    expect(response.body).to include "<_id>#{@software.id}</_id>"
   end
 
   it "gets edit" do
@@ -59,7 +59,7 @@ describe SoftwaresController do
   end
 
   it "destroys software" do
-    lambda{ delete :destroy, id: @software.to_param }.should change(Software, :count).by(-1)
+    expect{ delete :destroy, id: @software.to_param }.to change(Software, :count).by(-1)
     assert_redirected_to softwares_path
   end
 
@@ -73,33 +73,33 @@ describe SoftwaresController do
       contacts_count = Contact.count
       relations_count = Relationship.count
 
-      Software.where(name: "webapp-01").first.should be_blank
+      expect(Software.where(name: "webapp-01").first).to be_blank
 
       post :create, software: { name: "webapp-01", relationships_map: { role.id.to_s => "#{user1.id},#{user2.id}" } }
       webapp = Software.where(name: "webapp-01").first
 
 
-      webapp.contacts_with_role(role).should =~ [user1, user2]
-      Relationship.count.should eq relations_count + 1
+      expect(webapp.contacts_with_role(role)).to match_array([user1, user2])
+      expect(Relationship.count).to eq relations_count + 1
 
       webapp.destroy
-      Relationship.count.should eq relations_count
+      expect(Relationship.count).to eq relations_count
     end
 
     # NB: inherited_resources now caches params in a request, so you cannot have a test
     # with two different params hashes (didn't dug too deep into this for now)
     it "allows update with contacts" do
       put :update, id: app.id, software: { name: "Skynet", relationships_map: { role.id.to_s => "#{user1.id},#{user2.id}" } }
-      app.reload.contacts_with_role(role).should =~ [user1, user2]
+      expect(app.reload.contacts_with_role(role)).to match_array([user1, user2])
     end
 
     # NB: inherited_resources now caches params in a request, so you cannot have a test
     # with two different params hashes (didn't dug too deep into this for now)
     it "empties contacts" do
       app.update_attributes(relationships_map: { role.id.to_s => "#{user1.id},#{user2.id}" })
-      app.reload.contacts_with_role(role).should_not be_blank
+      expect(app.reload.contacts_with_role(role)).not_to be_blank
       put :update, id: app.id, software: { name: "webapp-01", relationships_map: { } }
-      app.reload.contacts_with_role(role).should be_blank
+      expect(app.reload.contacts_with_role(role)).to be_blank
     end
   end
 end

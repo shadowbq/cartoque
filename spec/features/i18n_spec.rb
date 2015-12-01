@@ -5,23 +5,23 @@ describe "I18n" do
     after { page.set_headers("HTTP_ACCEPT_LANGUAGE" => nil) }
 
     it "leaves I18n.locale to 'en' if no HTTP header available", type: :request do
-      I18n.default_locale.should eq :en
+      expect(I18n.default_locale).to eq :en
       visit "/users/sign_in"
-      I18n.locale.should eq :en
+      expect(I18n.locale).to eq :en
     end
 
     it "sets I18n.locale to HTTP_ACCEPT_LANGUAGE header first 2 letters if provided and locale exists" do
       page.set_headers("HTTP_ACCEPT_LANGUAGE" => "bleh")
       visit "/users/sign_in"
-      I18n.locale.should eq :en
+      expect(I18n.locale).to eq :en
 
       page.set_headers("HTTP_ACCEPT_LANGUAGE" => "fr")
       visit "/users/sign_in"
-      I18n.locale.should eq :fr
+      expect(I18n.locale).to eq :fr
 
       page.set_headers("HTTP_ACCEPT_LANGUAGE" => "french")
       visit "/users/sign_in"
-      I18n.locale.should eq :fr
+      expect(I18n.locale).to eq :fr
     end
   end
 
@@ -35,20 +35,20 @@ describe "I18n" do
     end
 
     it "takes the locale if possible" do
-      I18n.locale.should_not eq :fr
+      expect(I18n.locale).not_to eq :fr
       @user.update_setting("locale", "fr")
       @controller.send(:set_locale)
-      I18n.locale.should eq :fr
+      expect(I18n.locale).to eq :fr
     end
 
     it "doesn't take user locale if it's invalid" do
-      I18n.locale.should eq :en
+      expect(I18n.locale).to eq :en
       @user.update_setting("locale", "bl")
       @controller.send(:set_locale)
-      I18n.locale.should eq :en
+      expect(I18n.locale).to eq :en
       @user.update_setting("locale", "")
       @controller.send(:set_locale)
-      I18n.locale.should eq :en
+      expect(I18n.locale).to eq :en
     end
   end
 end

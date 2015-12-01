@@ -19,7 +19,7 @@ describe OperatingSystemsController do
   end
 
   it "creates operating_system" do
-    lambda{ post :create, operating_system: { name: "Minix" } }.should change(OperatingSystem, :count)
+    expect{ post :create, operating_system: { name: "Minix" } }.to change(OperatingSystem, :count)
     assert_redirected_to operating_systems_path
   end
 
@@ -34,7 +34,7 @@ describe OperatingSystemsController do
   end
 
   it "destroys operating_system" do
-    lambda{ delete :destroy, id: @operating_system.to_param }.should change(OperatingSystem, :count).by(-1)
+    expect{ delete :destroy, id: @operating_system.to_param }.to change(OperatingSystem, :count).by(-1)
     assert_redirected_to operating_systems_path
   end
 end

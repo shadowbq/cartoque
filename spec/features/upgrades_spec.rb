@@ -14,37 +14,37 @@ describe "Upgrades" do
   describe "GET /upgrades" do
     it "list all upgrades" do
       visit upgrades_path
-      page.status_code.should == 200
-      page.should have_content "server-01"
-      page.should have_content "kernel-3.0"
+      expect(page.status_code).to eq(200)
+      expect(page).to have_content "server-01"
+      expect(page).to have_content "kernel-3.0"
     end
 
     it "list upgrades depending on upgrade count" do
       visit upgrades_path(by_any_package: "1")
-      page.should_not have_content "server-03"
+      expect(page).not_to have_content "server-03"
       visit upgrades_path
-      page.should have_content "server-03"
+      expect(page).to have_content "server-03"
     end
 
     it "doesn't list upgrades if an exception exists" do
       visit upgrades_path
-      page.should have_content "server-01"
+      expect(page).to have_content "server-01"
       UpgradeExclusion.create!(reason: "Do not upgrade!", server_ids: [server1.id])
       visit upgrades_path
-      page.should_not have_content "server-01"
+      expect(page).not_to have_content "server-01"
     end
 
     it "sorts upgrades by server name and packages count" do
       visit upgrades_path
       click_link "Name"
-      current_path.should == upgrades_path
-      page.body.should match /server-01.*server-02/m
+      expect(current_path).to eq(upgrades_path)
+      expect(page.body).to match /server-01.*server-02/m
       click_link "Count"
-      current_path.should == upgrades_path
-      page.body.should match /server-02.*server-01/m #count asc, server2=>1, server1=>2
+      expect(current_path).to eq(upgrades_path)
+      expect(page.body).to match /server-02.*server-01/m #count asc, server2=>1, server1=>2
       click_link "Count"
-      current_path.should == upgrades_path
-      page.body.should match /server-01.*server-02/m #count desc, server1=>2, server2=>1
+      expect(current_path).to eq(upgrades_path)
+      expect(page.body).to match /server-01.*server-02/m #count desc, server1=>2, server2=>1
     end
   end
 end

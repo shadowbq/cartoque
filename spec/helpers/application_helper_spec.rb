@@ -11,7 +11,7 @@ describe ApplicationHelper do
     it "renders some links to external applications" do
       Setting.redmine_url = "http://redmine.org"
       text = links_for(FactoryGirl.create(:application))
-      text.should have_selector "a.link-to-redmine[href='http://redmine.org/projects/appli-01']", text: "R"
+      expect(text).to have_selector "a.link-to-redmine[href='http://redmine.org/projects/appli-01']", text: "R"
     end
   end
 
@@ -53,22 +53,22 @@ describe ApplicationHelper do
   describe "#link_to_website" do
     it "generates a link to a website" do
       website = "http://www.example.com"
-      link_to_website(website).should eq %(<a href="#{website}">#{website}</a>)
+      expect(link_to_website(website)).to eq %(<a href="#{website}">#{website}</a>)
     end
 
     it "adds 'http://' if no protocol defined" do
       website = "www.example.com"
-      link_to_website(website).should eq %(<a href="http://#{website}">#{website}</a>)
+      expect(link_to_website(website)).to eq %(<a href="http://#{website}">#{website}</a>)
     end
   end
 
   describe "#sidebar_item" do
     it "displays a link by default" do
-      sidebar_item("title", "url").should == %(<li><a href="url">title</a></li>)
+      expect(sidebar_item("title", "url")).to eq(%(<li><a href="url">title</a></li>))
     end
 
     it "optionnally includes a contextual tip" do
-      sidebar_item("title", "url", 5).should include %(<div class="contextual">5</div>)
+      expect(sidebar_item("title", "url", 5)).to include %(<div class="contextual">5</div>)
     end
   end
 end

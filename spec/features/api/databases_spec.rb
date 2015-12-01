@@ -12,31 +12,31 @@ describe "Databases API" do
   describe "GET /databases.json" do
     it "gets all databases" do
       visit databases_path(format: "json")
-      page.status_code.should == 200
+      expect(page.status_code).to eq(200)
       res = JSON.parse(page.body) rescue nil
-      res.should_not be nil
-      res.keys.should == ["databases"]
-      res["databases"].should have(1).database
+      expect(res).not_to be nil
+      expect(res.keys).to eq(["databases"])
+      expect(res["databases"].size).to eq(1)
       db = res["databases"].first
-      db["name"].should == "db-01"
-      db["instances"].count.should == 1
-      db["instances"].first["name"].should == "pg-cluster-01"
-      db["created_at"].should be_present
-      db["updated_at"].should be_present
+      expect(db["name"]).to eq("db-01")
+      expect(db["instances"].count).to eq(1)
+      expect(db["instances"].first["name"]).to eq("pg-cluster-01")
+      expect(db["created_at"]).to be_present
+      expect(db["updated_at"]).to be_present
     end
   end
 
   describe "GET /databases/:id" do
     it "shows a specific database" do
       visit database_path(id: database.id.to_s, format: "json")
-      page.status_code.should == 200
+      expect(page.status_code).to eq(200)
       res = JSON.parse(page.body) rescue nil
-      res.should_not be nil
-      res.keys.should == ["database"]
+      expect(res).not_to be nil
+      expect(res.keys).to eq(["database"])
       db = res["database"]
-      db["name"].should == "db-01"
-      db["created_at"].should be_present
-      db["updated_at"].should be_present
+      expect(db["name"]).to eq("db-01")
+      expect(db["created_at"]).to be_present
+      expect(db["updated_at"]).to be_present
     end
   end
 end

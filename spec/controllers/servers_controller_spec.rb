@@ -14,11 +14,11 @@ describe ServersController do
       # 0000000000000 => valid ObjectId but no document      => Mongoid::Errors::DocumentNotFound
       %w(0 0000000000000).each do |invalid_id|
         get :show, id: invalid_id
-        response.status.should == 404
-        response.body.should include("These are not the droids you're looking for")
+        expect(response.status).to eq(404)
+        expect(response.body).to include("These are not the droids you're looking for")
         get :show, id: invalid_id, format: "json"
-        response.status.should == 404
-        response.body.should be_blank
+        expect(response.status).to eq(404)
+        expect(response.body).to be_blank
       end
     end
   end
@@ -46,14 +46,14 @@ describe ServersController do
     end
 
     it "creates server" do
-      lambda{ post :create, server: {"name" => "new-server"} }.should change(Server, :count).by(+1)
+      expect{ post :create, server: {"name" => "new-server"} }.to change(Server, :count).by(+1)
       assert_redirected_to server_path(assigns(:server))
     end
 
     it "accepts multi parameter attributes for dates" do
       post :create, server: {"name" => "new-server", "delivered_on(3i)"=>"10", "delivered_on(2i)"=>"12", "delivered_on(1i)"=>"2008" }
       assert_response :redirect
-      Server.last.delivered_on.should == Date.new(2008, 12, 10)
+      expect(Server.last.delivered_on).to eq(Date.new(2008, 12, 10))
     end
 
     it "shows server" do
@@ -80,7 +80,7 @@ describe ServersController do
     end
 
     it "destroys server" do
-      lambda{ delete :destroy, id: server.id.to_s }.should change(Server, :count).by(-1)
+      expect{ delete :destroy, id: server.id.to_s }.to change(Server, :count).by(-1)
       assert_redirected_to servers_path
     end
   end

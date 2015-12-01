@@ -6,7 +6,7 @@ describe BackupExclusion do
     exception = BackupExclusion.create(reason: "Here's why !")
     exception.server_ids = [srv.id]
     exception.save
-    exception.reload.server_ids.should == [srv.id]
-    exception.reload.servers.should == [srv]
+    expect(exception.reload.server_ids).to eq([srv.id])
+    expect(exception.reload.servers).to eq([srv])
   end
 end

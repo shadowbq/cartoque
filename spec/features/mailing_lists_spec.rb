@@ -11,8 +11,8 @@ describe "Mailing Lists" do
     it "gets all mailing lists" do
       MailingList.create!(name: "My List")
       visit mailing_lists_path
-      page.status_code.should be 200
-      page.should have_content "My List"
+      expect(page.status_code).to be 200
+      expect(page).to have_content "My List"
     end
   end
 
@@ -23,9 +23,9 @@ describe "Mailing Lists" do
       fill_in "mailing_list_name", with: "Executive committee"
       select "Doe <john@doe.com>", from: "mailing_list_contact_ids"
       click_button "Create"
-      current_path.should == mailing_lists_path
-      page.should have_content "Executive committee"
-      page.should have_content "john@doe.com"
+      expect(current_path).to eq(mailing_lists_path)
+      expect(page).to have_content "Executive committee"
+      expect(page).to have_content "john@doe.com"
     end
   end
 
@@ -37,9 +37,9 @@ describe "Mailing Lists" do
       fill_in "mailing_list_name", with: "The board"
       unselect "Doe <john@doe.com>", from: "mailing_list_contact_ids"
       click_button "Apply modifications"
-      current_path.should == mailing_lists_path
-      page.should have_content "The board"
-      page.should_not have_content "john@doe.com"
+      expect(current_path).to eq(mailing_lists_path)
+      expect(page).to have_content "The board"
+      expect(page).not_to have_content "john@doe.com"
     end
   end
 
@@ -49,11 +49,11 @@ describe "Mailing Lists" do
       list = MailingList.create!(name: "Board", contact_ids: [ john.id ])
       visit mailing_lists_path
       click_link "Delete mailinglist #{list.to_param}"
-      current_path.should == mailing_lists_path
-      page.should have_content "Mailing list was successfully destroyed"
-      page.should_not have_content "Board"
-      MailingList.count.should == 0
-      Contact.where(last_name: "Dupont").to_a.count.should == 1
+      expect(current_path).to eq(mailing_lists_path)
+      expect(page).to have_content "Mailing list was successfully destroyed"
+      expect(page).not_to have_content "Board"
+      expect(MailingList.count).to eq(0)
+      expect(Contact.where(last_name: "Dupont").to_a.count).to eq(1)
     end
   end
 end

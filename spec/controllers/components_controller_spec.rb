@@ -32,7 +32,7 @@ describe ComponentsController do
     it "assigns all components as @components" do
       component = Component.create! valid_attributes
       get :index
-      assigns(:components).should eq([component])
+      expect(assigns(:components)).to eq([component])
     end
   end
 
@@ -40,14 +40,14 @@ describe ComponentsController do
     it "assigns the requested component as @component" do
       component = Component.create! valid_attributes
       get :show, {id: component.to_param}
-      assigns(:component).should eq(component)
+      expect(assigns(:component)).to eq(component)
     end
   end
 
   describe "GET new" do
     it "assigns a new component as @component" do
       get :new
-      assigns(:component).should be_a_new(Component)
+      expect(assigns(:component)).to be_a_new(Component)
     end
   end
 
@@ -55,7 +55,7 @@ describe ComponentsController do
     it "assigns the requested component as @component" do
       component = Component.create! valid_attributes
       get :edit, {id: component.to_param}
-      assigns(:component).should eq(component)
+      expect(assigns(:component)).to eq(component)
     end
   end
 
@@ -70,13 +70,13 @@ describe ComponentsController do
 
       it "assigns a newly created component as @component" do
         post :create, {component: valid_attributes}
-        assigns(:component).should be_a(Component)
-        assigns(:component).should be_persisted
+        expect(assigns(:component)).to be_a(Component)
+        expect(assigns(:component)).to be_persisted
       end
 
       it "redirects to the created component" do
         post :create, {component: valid_attributes}
-        response.should redirect_to(Component.last)
+        expect(response).to redirect_to(Component.last)
       end
     end
 
@@ -85,7 +85,7 @@ describe ComponentsController do
         # Trigger the behavior that occurs when invalid params are submitted
         Component.any_instance.stub(:save).and_return(false)
         post :create, {component: {}}
-        assigns(:component).should be_a_new(Component)
+        expect(assigns(:component)).to be_a_new(Component)
       end
 
       #TODO: redirects to index while it should not validate, see why it fails!
@@ -113,13 +113,13 @@ describe ComponentsController do
       it "assigns the requested component as @component" do
         component = Component.create! valid_attributes
         put :update, {id: component.to_param, component: valid_attributes}
-        assigns(:component).should eq(component)
+        expect(assigns(:component)).to eq(component)
       end
 
       it "redirects to the component" do
         component = Component.create! valid_attributes
         put :update, {id: component.to_param, component: valid_attributes}
-        response.should redirect_to(component)
+        expect(response).to redirect_to(component)
       end
     end
 
@@ -129,7 +129,7 @@ describe ComponentsController do
         # Trigger the behavior that occurs when invalid params are submitted
         Component.any_instance.stub(:save).and_return(false)
         put :update, {id: component.to_param, component: {}}
-        assigns(:component).should eq(component)
+        expect(assigns(:component)).to eq(component)
       end
 
       #TODO: redirects to index while it should not validate, see why it fails!
@@ -154,7 +154,7 @@ describe ComponentsController do
     it "redirects to the components list" do
       component = Component.create! valid_attributes
       delete :destroy, {id: component.to_param}
-      response.should redirect_to(components_url)
+      expect(response).to redirect_to(components_url)
     end
   end
 

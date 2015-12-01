@@ -11,31 +11,31 @@ describe "Softwares API" do
   describe "GET /softwares.json" do
     it "gets all softwares" do
       visit softwares_path(format: "json")
-      page.status_code.should == 200
+      expect(page.status_code).to eq(200)
       res = JSON.parse(page.body) rescue nil
-      res.should_not be nil
-      res.keys.should == ["softwares"]
-      res["softwares"].should have(1).software
+      expect(res).not_to be nil
+      expect(res.keys).to eq(["softwares"])
+      expect(res["softwares"].size).to eq(1)
       app = res["softwares"].first
-      app["name"].should == "app-01"
-      app.keys.should_not include "software_instances"
-      app["created_at"].should be_present
-      app["updated_at"].should be_present
+      expect(app["name"]).to eq("app-01")
+      expect(app.keys).not_to include "software_instances"
+      expect(app["created_at"]).to be_present
+      expect(app["updated_at"]).to be_present
     end
   end
 
   describe "GET /softwares/:id.json" do
     it "shows a specific software" do
       visit software_path(id: software.id.to_s, format: "json")
-      page.status_code.should == 200
+      expect(page.status_code).to eq(200)
       res = JSON.parse(page.body) rescue nil
-      res.should_not be nil
-      res.keys.should == ["software"]
+      expect(res).not_to be nil
+      expect(res.keys).to eq(["software"])
       app = res["software"]
-      app["name"].should == "app-01"
+      expect(app["name"]).to eq("app-01")
       #app.keys.should_not include "software_instances"
-      app["created_at"].should be_present
-      app["updated_at"].should be_present
+      expect(app["created_at"]).to be_present
+      expect(app["updated_at"]).to be_present
     end
   end
 end

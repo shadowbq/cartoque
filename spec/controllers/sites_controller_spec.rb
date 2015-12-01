@@ -19,7 +19,7 @@ describe SitesController do
   end
 
   it "creates site" do
-    lambda{ post :create, site: { name: "site-01" } }.should change(Site, :count)
+    expect{ post :create, site: { name: "site-01" } }.to change(Site, :count)
     assert_redirected_to sites_path
   end
 
@@ -34,7 +34,7 @@ describe SitesController do
   end
 
   it "destroys site" do
-    lambda{ delete :destroy, id: @site.to_param }.should change(Site, :count).by(-1)
+    expect{ delete :destroy, id: @site.to_param }.to change(Site, :count).by(-1)
     assert_redirected_to sites_path
   end
 end

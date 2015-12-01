@@ -9,15 +9,15 @@ describe "Databases" do
   describe "GET /databases" do
     it "gets all databases" do
       visit databases_path
-      page.status_code.should be 200
-      page.should have_content "db-01"
+      expect(page.status_code).to be 200
+      expect(page).to have_content "db-01"
     end
   end
 
   describe "GET /databases/:id" do
     it "shows a database page" do
       visit database_path(database.to_param)
-      page.should have_selector "h1", text: /Databases.*db-01/
+      expect(page).to have_selector "h1", text: /Databases.*db-01/
     end
   end
 
@@ -28,15 +28,15 @@ describe "Databases" do
 
     it "creates a new database" do
       visit new_database_path
-      page.status_code.should == 200
+      expect(page.status_code).to eq(200)
       fill_in "database_name", with: "vm-oracle-01"
       select "oracle", from:  "database_type"
       select "", from: "database_server_ids"
       select "server-01", from: "database_server_ids"
       click_button "Create"
-      current_path.should == databases_path
-      page.should have_content "vm-oracle-01"
-      page.should have_content "server-01"
+      expect(current_path).to eq(databases_path)
+      expect(page).to have_content "vm-oracle-01"
+      expect(page).to have_content "server-01"
     end
   end
 

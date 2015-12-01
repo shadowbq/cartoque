@@ -9,8 +9,8 @@ describe "Licenses" do
   describe "GET /licenses" do
     it "gets all licenses" do
       visit licenses_path
-      page.status_code.should be 200
-      page.should have_content "Big company"
+      expect(page.status_code).to be 200
+      expect(page).to have_content "Big company"
     end
   end
 

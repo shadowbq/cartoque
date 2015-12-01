@@ -20,7 +20,7 @@ describe BackupExclusionsController, :type => :controller do
   end
 
   it "creates backup_exclusion" do
-    lambda{ post :create, backup_exclusion: { reason: "Here a good reason" } }.should change(BackupExclusion, :count)
+    expect{ post :create, backup_exclusion: { reason: "Here a good reason" } }.to change(BackupExclusion, :count)
     assert_redirected_to backup_exclusions_path
   end
 
@@ -35,7 +35,7 @@ describe BackupExclusionsController, :type => :controller do
   end
 
   it "destroys backup_exclusion" do
-    lambda{ delete :destroy, id: @backup_exclusion.to_param }.should change(BackupExclusion, :count).by(-1)
+    expect{ delete :destroy, id: @backup_exclusion.to_param }.to change(BackupExclusion, :count).by(-1)
     assert_redirected_to backup_exclusions_path
   end
 end

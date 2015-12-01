@@ -2,15 +2,15 @@ require 'spec_helper'
 
 describe Datacenter do
   it "has a name" do
-    Datacenter.new.should_not be_valid
-    Datacenter.new(name: "Blah").should be_valid
+    expect(Datacenter.new).not_to be_valid
+    expect(Datacenter.new(name: "Blah")).to be_valid
   end
 
   it "has a unique name across the instance" do
     Datacenter.create!(name: "Datacenter")
     dc = Datacenter.new(name: "Datacenter")
-    dc.should_not be_valid
-    dc.errors.keys.should == [:name]
+    expect(dc).not_to be_valid
+    expect(dc.errors.keys).to eq([:name])
   end
 
   describe ".default" do
@@ -19,23 +19,23 @@ describe Datacenter do
     end
 
     it "returns first datacenter if any" do
-      Datacenter.count.should == 0
+      expect(Datacenter.count).to eq(0)
       Datacenter.create!(name: "Hosterz")
-      Datacenter.default.name.should == "Hosterz"
+      expect(Datacenter.default.name).to eq("Hosterz")
     end
 
     it "generates a default datacenter if none" do
-      Datacenter.count.should == 0
+      expect(Datacenter.count).to eq(0)
       dc = Datacenter.default
-      dc.should_not be_blank
-      dc.name.should == "Datacenter"
+      expect(dc).not_to be_blank
+      expect(dc.name).to eq("Datacenter")
     end
 
     it "allows changing default datacenter in controller" do
       Datacenter.create!(name: "Hosterz")
-      Datacenter.default.name.should == "Hosterz"
+      expect(Datacenter.default.name).to eq("Hosterz")
       Datacenter.default = Datacenter.create(name: "Phoenix")
-      Datacenter.default.name.should == "Phoenix"
+      expect(Datacenter.default.name).to eq("Phoenix")
     end
   end
 end

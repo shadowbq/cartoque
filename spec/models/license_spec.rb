@@ -9,11 +9,11 @@ describe License do
     license1.server_ids = [server.id]
     license1.save
     license1.reload
-    license1.servers.should include server
+    expect(license1.servers).to include server
     #inverse
     vm = Server.create!(name: "vm-blah", license_ids: [license2.id])
-    vm.license_ids.should include license2.id
-    license2.reload.server_ids.should include vm.id
+    expect(vm.license_ids).to include license2.id
+    expect(license2.reload.server_ids).to include vm.id
   end
 
   describe "scopes" do
@@ -21,21 +21,21 @@ describe License do
     end
 
     it "filters licenses by editor" do
-      License.by_editor("softcompany2").to_a.should == [license2]
+      expect(License.by_editor("softcompany2").to_a).to eq([license2])
     end
 
     it "filters licenses by key" do
-      License.by_key("AD").to_a.should == [license2]
+      expect(License.by_key("AD").to_a).to eq([license2])
     end
 
     it "filters licenses by title" do
-      License.by_title("Soft1").to_a.should == [license1]
+      expect(License.by_title("Soft1").to_a).to eq([license1])
     end
 
     it "filters licenses by server id" do
       server.licenses = [license2]
       server.save
-      License.by_server(server.id).to_a.should == [license2]
+      expect(License.by_server(server.id).to_a).to eq([license2])
     end
   end
 end

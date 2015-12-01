@@ -6,27 +6,27 @@ describe MailingList do
   let (:company) { Company.create(name: "World Company", email_infos: [ EmailInfo.new(value: "world@company.com") ]) }
 
   it "updates contact and company ids" do
-    ml.contact_ids.should == []
-    ml.company_ids.should == []
+    expect(ml.contact_ids).to eq([])
+    expect(ml.company_ids).to eq([])
     ml.update_attributes(contact_ids: [contact.id.to_s], company_ids: [company.id.to_s])
     ml.reload
-    ml.contact_ids.should include contact.id
-    ml.contacts.should include contact
-    ml.company_ids.should include company.id
-    ml.companies.should include company
+    expect(ml.contact_ids).to include contact.id
+    expect(ml.contacts).to include contact
+    expect(ml.company_ids).to include company.id
+    expect(ml.companies).to include company
   end
 
   it "groups contactable objects" do
-    ml.contactables.should == []
+    expect(ml.contactables).to eq([])
     ml.update_attributes(contact_ids: [contact.id.to_s], company_ids: [company.id.to_s])
     ml.reload
-    ml.contactables.should =~ [contact, company]
+    expect(ml.contactables).to match_array([contact, company])
   end
 
   it "gives access to mail addresses directly" do
     ml.update_attributes(contact_ids: [contact.id.to_s], company_ids: [company.id.to_s])
     ml.reload
-    ml.email_addresses.should =~ %w(john@doe.com world@company.com)
+    expect(ml.email_addresses).to match_array(%w(john@doe.com world@company.com))
   end
 
   describe "#email_addresses" do
@@ -34,7 +34,7 @@ describe MailingList do
       ml.update_attributes(contact_ids: [contact.id.to_s], company_ids: [company.id.to_s])
       contact.email_infos.first.destroy
       ml.reload
-      ml.email_addresses.should == %w(world@company.com)
+      expect(ml.email_addresses).to eq(%w(world@company.com))
     end
   end
 end

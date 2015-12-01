@@ -16,8 +16,8 @@ describe TomcatsController do
                      server: Server.create!(name: "vm-01"))
       get :index, format: "csv"
       assert_response :success
-      response.body.should include("vm-01,TC60_01,app01.example.com,Java160")
-      response.body.lines.count.should == 1
+      expect(response.body).to include("vm-01,TC60_01,app01.example.com,Java160")
+      expect(response.body.lines.count).to eq(1)
     end
   end
 end

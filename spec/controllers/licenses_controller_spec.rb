@@ -14,7 +14,7 @@ describe LicensesController do
   end
 
   it "creates license" do
-    lambda{ post :create, license: { editor: "WorldSoft", key: "123456" } }.should change(License, :count)
+    expect{ post :create, license: { editor: "WorldSoft", key: "123456" } }.to change(License, :count)
     assert_redirected_to licenses_path
   end
 
@@ -29,7 +29,7 @@ describe LicensesController do
   end
 
   it "destroys license" do
-    lambda{ delete :destroy, id: @license.to_param }.should change(License, :count).by(-1)
+    expect{ delete :destroy, id: @license.to_param }.to change(License, :count).by(-1)
     assert_redirected_to licenses_path
   end
 end

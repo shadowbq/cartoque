@@ -19,7 +19,7 @@ describe PhysicalRacksController do
   end
 
   it "creates physical_rack" do
-    lambda{ post :create, physical_rack: { name: "rack-01" } }.should change(PhysicalRack, :count)
+    expect{ post :create, physical_rack: { name: "rack-01" } }.to change(PhysicalRack, :count)
     assert_redirected_to physical_racks_path
   end
 
@@ -34,7 +34,7 @@ describe PhysicalRacksController do
   end
 
   it "destroys physical_rack" do
-    lambda{ delete :destroy, id: @physical_rack.to_param }.should change(PhysicalRack, :count).by(-1)
+    expect{ delete :destroy, id: @physical_rack.to_param }.to change(PhysicalRack, :count).by(-1)
     assert_redirected_to physical_racks_path
   end
 end

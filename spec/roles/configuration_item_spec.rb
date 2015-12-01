@@ -49,19 +49,19 @@ RSpec.describe ConfigurationItem do
     end
 
     it 'sees everything if there is no User.current' do
-      Server.all.to_a.should =~ [@server1, @server2]
+      expect(Server.all.to_a).to match_array([@server1, @server2])
     end
 
     it 'does not see anything if no visible_datacenters configured at user level' do
       User.current = @bob
-      Server.all.to_a.should =~ []
+      expect(Server.all.to_a).to match_array([])
     end
 
     it 'only sees servers in visible datacenters' do
       @bob.visible_datacenters = [@datacenter1]
       @bob.save
       User.current = @bob
-      Server.all.to_a.should =~ [@server1]
+      expect(Server.all.to_a).to match_array([@server1])
     end
 
     it 'also scopes things for find method' do
@@ -75,7 +75,7 @@ RSpec.describe ConfigurationItem do
       @bob.visible_datacenters = [@datacenter1, FactoryGirl.create(:datacenter, name: "Paris")]
       @bob.save
       User.current = @bob
-      Server.all.to_a.should =~ [@server1]
+      expect(Server.all.to_a).to match_array([@server1])
     end
 
     it 'always finds servers that have no datacenter information if user is present' do
@@ -83,10 +83,10 @@ RSpec.describe ConfigurationItem do
       @server4 = FactoryGirl.create(:server, name: "server4")
       @server4.unset(:datacenter_ids)
       User.current = @bob
-      Server.all.to_a.should =~ [@server3, @server4]
+      expect(Server.all.to_a).to match_array([@server3, @server4])
       @bob.visible_datacenters = [@datacenter1]
       @bob.save
-      Server.all.to_a.should =~ [@server1, @server3, @server4]
+      expect(Server.all.to_a).to match_array([@server1, @server3, @server4])
     end
 
   end
@@ -104,7 +104,7 @@ RSpec.describe ConfigurationItem do
     it 'does not fill datacenter_ids when blank but no User.current' do
       User.current = nil
       s = Server.create!(name: "pouik")
-      s.reload.datacenters.should == []
+      expect(s.reload.datacenters).to eq([])
     end
 
     it 'fills datacenter_ids when blank and User.current has any' do
@@ -112,7 +112,7 @@ RSpec.describe ConfigurationItem do
       bob = FactoryGirl.create(:bob, preferred_datacenter: datacenter)
       User.current = bob
       s = Server.create!(name: "pouik")
-      s.reload.datacenters.should == [datacenter]
+      expect(s.reload.datacenters).to eq([datacenter])
     end
 
     it 'does not replace datacenter_ids when not blank' do
@@ -121,7 +121,7 @@ RSpec.describe ConfigurationItem do
       bob = FactoryGirl.create(:bob, preferred_datacenter: datacenter1)
       User.current = bob
       s = Server.create!(name: "pouik", datacenters: [datacenter2])
-      s.reload.datacenters.should == [datacenter2]
+      expect(s.reload.datacenters).to eq([datacenter2])
     end
 
     it 'does not fill datacenter_ids for existing objects' do
@@ -129,10 +129,10 @@ RSpec.describe ConfigurationItem do
       bob = FactoryGirl.create(:bob, preferred_datacenter: datacenter)
       User.current = nil
       s = Server.create!(name: "pouik")
-      s.reload.datacenters.should == []
+      expect(s.reload.datacenters).to eq([])
       User.current = bob
       s.update_attribute(:name, "pouik2")
-      s.reload.datacenters.should == []
+      expect(s.reload.datacenters).to eq([])
     end
   end
 end

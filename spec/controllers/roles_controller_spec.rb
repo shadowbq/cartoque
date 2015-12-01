@@ -32,14 +32,14 @@ describe RolesController do
     it "assigns all roles as @roles" do
       role = Role.create! valid_attributes
       get :index
-      assigns(:roles).should eq([role])
+      expect(assigns(:roles)).to eq([role])
     end
   end
 
   describe "GET new" do
     it "assigns a new role as @role" do
       get :new
-      assigns(:role).should be_a_new(Role)
+      expect(assigns(:role)).to be_a_new(Role)
     end
   end
 
@@ -47,7 +47,7 @@ describe RolesController do
     it "assigns the requested role as @role" do
       role = Role.create! valid_attributes
       get :edit, id: role.id
-      assigns(:role).should eq(role)
+      expect(assigns(:role)).to eq(role)
     end
   end
 
@@ -61,13 +61,13 @@ describe RolesController do
 
       it "assigns a newly created role as @role" do
         post :create, role: valid_attributes
-        assigns(:role).should be_a(Role)
-        assigns(:role).should be_persisted
+        expect(assigns(:role)).to be_a(Role)
+        expect(assigns(:role)).to be_persisted
       end
 
       it "redirects to the created role" do
         post :create, role: valid_attributes
-        response.should redirect_to(roles_url)
+        expect(response).to redirect_to(roles_url)
       end
     end
 
@@ -76,7 +76,7 @@ describe RolesController do
         # Trigger the behavior that occurs when invalid params are submitted
         Role.any_instance.stub(:save).and_return(false)
         post :create, role: {}
-        assigns(:role).should be_a_new(Role)
+        expect(assigns(:role)).to be_a_new(Role)
       end
 
       #TODO: fix it: create role doesn't use the stubbed method
@@ -104,13 +104,13 @@ describe RolesController do
       it "assigns the requested role as @role" do
         role = Role.create! valid_attributes
         put :update, id: role.id, role: valid_attributes
-        assigns(:role).should eq(role)
+        expect(assigns(:role)).to eq(role)
       end
 
       it "redirects to the role" do
         role = Role.create! valid_attributes
         put :update, id: role.id, role: valid_attributes
-        response.should redirect_to(roles_url)
+        expect(response).to redirect_to(roles_url)
       end
     end
 
@@ -120,7 +120,7 @@ describe RolesController do
         # Trigger the behavior that occurs when invalid params are submitted
         Role.any_instance.stub(:save).and_return(false)
         put :update, id: role.id, role: {}
-        assigns(:role).should eq(role)
+        expect(assigns(:role)).to eq(role)
       end
 
       #TODO: fix it! Role found doesn't use the stubbed method
@@ -145,7 +145,7 @@ describe RolesController do
     it "redirects to the roles list" do
       role = Role.create! valid_attributes
       delete :destroy, id: role.id
-      response.should redirect_to(roles_url)
+      expect(response).to redirect_to(roles_url)
     end
   end
 
@@ -154,11 +154,11 @@ describe RolesController do
       Role.destroy_all
       one = Role.create! valid_attributes.merge(name: "One")
       two = Role.create! valid_attributes.merge(name: "Two")
-      Role.all.to_a.map(&:name).should == %w(One Two)
+      expect(Role.all.to_a.map(&:name)).to eq(%w(One Two))
       post :sort, role: [ two.to_param, one.to_param ]
-      response.status.should == 200
-      response.body.should be_blank
-      Role.all.to_a.map(&:name).should == %w(Two One)
+      expect(response.status).to eq(200)
+      expect(response.body).to be_blank
+      expect(Role.all.to_a.map(&:name)).to eq(%w(Two One))
     end
   end
 end

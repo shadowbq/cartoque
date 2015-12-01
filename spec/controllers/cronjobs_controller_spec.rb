@@ -15,7 +15,7 @@ describe CronjobsController do
       server = Server.create!(name: "my-server")
       Cronjob.create!(definition_location: "/etc/cron.d/crontask", hierarchy: "/",
                       frequency: "* * * * *", server_id: server.id.to_s, command: "/bin/ls")
-      server.reload.cronjobs.count.should == 1
+      expect(server.reload.cronjobs.count).to eq(1)
       get :index, by_server: server.id
       assert_select "td[colspan=5]", 0
       assert_select "td", server.name

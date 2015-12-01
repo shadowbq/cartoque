@@ -10,15 +10,15 @@ describe "Puppet" do
   describe "GET /puppet/servers" do
     it "list all servers with puppet enabled" do
       visit "/puppet/servers"
-      page.status_code.should == 200
-      page.should have_content "server-01"
-      page.should have_content "server-02"
+      expect(page.status_code).to eq(200)
+      expect(page).to have_content "server-01"
+      expect(page).to have_content "server-02"
     end
 
     it "filters servers by puppet status" do
       visit "/puppet/servers?by_puppet=1"
-      page.should have_content "server-01"
-      page.should_not have_content "server-02"
+      expect(page).to have_content "server-01"
+      expect(page).not_to have_content "server-02"
     end
   end
 end

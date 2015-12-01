@@ -17,31 +17,31 @@ describe "Softwares" do
   describe "GET /softwares" do
     it "gets all softwares ordered by name" do
       visit softwares_path
-      page.status_code.should be 200
-      page.should have_content "app-01"
+      expect(page.status_code).to be 200
+      expect(page).to have_content "app-01"
     end
 
     it "only sees softwares in visible_datacenters or without datacenter" do
       user.update_attribute(:visible_datacenter_ids, [datacenter.id])
       Software.create!(name: "app-04", datacenter_ids: [foreign_datacenter.id])
       visit softwares_path
-      page.status_code.should be 200
-      page.should have_content "app-01"     #no datacenter
-      page.should_not have_content "app-04" #datacenter, not visible
+      expect(page.status_code).to be 200
+      expect(page).to have_content "app-01"     #no datacenter
+      expect(page).not_to have_content "app-04" #datacenter, not visible
     end
   end
 
   describe "GET /softwares/:id" do
     it "shows an software page" do
       visit software_path(@app)
-      page.should have_selector "h2", text: "app-01"
+      expect(page).to have_selector "h2", text: "app-01"
     end
   end
 
   describe "GET /softwares/:id/edit" do
     it "shows an software form" do
       visit edit_software_path(@app)
-      page.should have_selector "form#edit_software_#{@app.id}"
+      expect(page).to have_selector "form#edit_software_#{@app.id}"
     end
   end
 end

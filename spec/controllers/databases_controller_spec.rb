@@ -19,7 +19,7 @@ describe DatabasesController do
       db = Database.create! valid_attributes
       get :index
       assert_template 'index'
-      assigns(:databases).should include db
+      expect(assigns(:databases)).to include db
     end
   end
 
@@ -29,21 +29,21 @@ describe DatabasesController do
     it "send back a list of databases" do
       get :index, format: "json"
       json = JSON.parse(response.body)
-      json["databases"][0]["name"].should == "database-01"
+      expect(json["databases"][0]["name"]).to eq("database-01")
     end
 
     it "doesn't include servers by default, but server_names" do
       get :index, format: "json"
       json = JSON.parse(response.body)
-      json["databases"][0]["server_names"].should == ["server-01"]
-      json["databases"][0]["servers"].should be_blank
+      expect(json["databases"][0]["server_names"]).to eq(["server-01"])
+      expect(json["databases"][0]["servers"]).to be_blank
     end
 
     it "includes servers if requested" do
       get :index, include: "servers", format: "json"
       json = JSON.parse(response.body)
-      json["databases"][0]["server_names"].should == ["server-01"]
-      json["databases"][0]["servers"].should_not be_blank
+      expect(json["databases"][0]["server_names"]).to eq(["server-01"])
+      expect(json["databases"][0]["servers"]).not_to be_blank
       json["databases"][0]["servers"][0]["name"] == "server-01"
     end
   end
@@ -111,17 +111,17 @@ describe DatabasesController do
       database = Database.first
       delete :destroy, id: database
       assert_redirected_to databases_url
-      Database.where(_id: database.id).count.should == 0
+      expect(Database.where(_id: database.id).count).to eq(0)
     end
   end
 
   describe "DELETE :destroy_instance" do
     it "destroys a specific database instance" do
       instance = DatabaseInstance.create!(database: @database, name: "Instance", databases: {schema1: "blah"})
-      @database.reload.database_instances.count.should == 1
+      expect(@database.reload.database_instances.count).to eq(1)
       delete :destroy_instance, id: @database.id, instance_id: instance.id
       assert_redirected_to databases_url
-      @database.reload.database_instances.count.should == 0
+      expect(@database.reload.database_instances.count).to eq(0)
     end
   end
 end

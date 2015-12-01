@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Site do
   it "is valid with just a name" do
     site = Site.new
-    site.should_not be_valid
+    expect(site).not_to be_valid
     site.name = "room-1"
-    site.should be_valid
+    expect(site).to be_valid
   end
 
   it "can have one or many racks" do
@@ -13,24 +13,24 @@ describe Site do
     rack = FactoryGirl.create(:rack1)
     rack.site = site
     rack.save
-    rack.site.should eq site
-    site.physical_racks.to_a.should eq [ rack ]
+    expect(rack.site).to eq site
+    expect(site.physical_racks.to_a).to eq [ rack ]
   end
 
   it "updates rack's site_name" do
     site = Site.create!(name: "room-1")
     rack = PhysicalRack.create!(name: "rack-one", site: site)
     srv =  Server.create!(name: "srv", physical_rack: rack)
-    rack.site_name.should == "room-1"
+    expect(rack.site_name).to eq("room-1")
     rack.reload
 
     site.name = "room-one"
     site.save
-    rack.reload.site_name.should == "room-one"
-    srv.reload.physical_rack_full_name.should == "room-one - rack-one"
+    expect(rack.reload.site_name).to eq("room-one")
+    expect(srv.reload.physical_rack_full_name).to eq("room-one - rack-one")
 
     site.destroy
-    rack.reload.site_name.should == nil
-    srv.reload.physical_rack_full_name.should == "rack-one"
+    expect(rack.reload.site_name).to eq(nil)
+    expect(srv.reload.physical_rack_full_name).to eq("rack-one")
   end
 end

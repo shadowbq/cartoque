@@ -7,11 +7,11 @@ describe SoftwareUrl do
   end
 
   it "shouldn't be valid if not in an SoftwareInstance" do
-    SoftwareUrl.new(url: "http://www.example.com/").should_not be_valid
-    SoftwareUrl.new(url: "http://www.example.com/", software_instance: @inst).should be_valid
+    expect(SoftwareUrl.new(url: "http://www.example.com/")).not_to be_valid
+    expect(SoftwareUrl.new(url: "http://www.example.com/", software_instance: @inst)).to be_valid
   end
 
   it "shouldn't create an empty url" do
-    SoftwareUrl.new(url: "", software_instance: @inst).should_not be_valid
+    expect(SoftwareUrl.new(url: "", software_instance: @inst)).not_to be_valid
   end
 end

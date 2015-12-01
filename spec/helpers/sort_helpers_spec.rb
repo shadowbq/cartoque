@@ -69,8 +69,8 @@ describe SortHelpers do
 
   it "authorizes prefix from an other resource if existent" do
     @controller.params = {sort: "licenses.key", direction: "asc"}
-    @controller.option.should eq [["licenses.key", "asc"]]
+    expect(@controller.option).to eq [["licenses.key", "asc"]]
     @controller.params = {sort: "licenzes.key", direction: "asc"}
-    @controller.option.should eq [["prefix.name", "asc"]]
+    expect(@controller.option).to eq [["prefix.name", "asc"]]
   end
 end

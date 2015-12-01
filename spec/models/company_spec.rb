@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Company do
   it "has a name to be valid" do
-    Company.new.should_not be_valid
-    Company.new(name: "WorldCompany").should be_valid
-    Company.new(name: "WorldCompany").image_url.should == "building.png"
+    expect(Company.new).not_to be_valid
+    expect(Company.new(name: "WorldCompany")).to be_valid
+    expect(Company.new(name: "WorldCompany").image_url).to eq("building.png")
   end
 
   describe "#search" do
@@ -14,13 +14,13 @@ describe Company do
     end
 
     it "returns everything if parameter is blank" do
-      Company.like("").to_a.should =~ [@company1, @company2]
+      expect(Company.like("").to_a).to match_array([@company1, @company2])
     end
     
     it "filters companys by name" do
-      Company.like("World").to_a.should =~ [@company1]
-      Company.like("Tiny").to_a.should =~ [@company2]
-      Company.like("Comp").to_a.should =~ [@company1, @company2]
+      expect(Company.like("World").to_a).to match_array([@company1])
+      expect(Company.like("Tiny").to_a).to match_array([@company2])
+      expect(Company.like("Comp").to_a).to match_array([@company1, @company2])
     end
   end
 
@@ -31,7 +31,7 @@ describe Company do
     end
 
     it "returns maintainers only" do
-      Company.maintainers.to_a.should =~ [ @company2 ]
+      expect(Company.maintainers.to_a).to match_array([ @company2 ])
     end
   end
 
@@ -44,7 +44,7 @@ describe Company do
 
     it "has some maintained servers" do
       @company.reload
-      @company.maintained_servers.to_a.should == [ @server1 ]
+      expect(@company.maintained_servers.to_a).to eq([ @server1 ])
     end
   end
 end

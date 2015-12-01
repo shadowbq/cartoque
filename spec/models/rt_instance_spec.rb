@@ -10,17 +10,17 @@ end
 describe RtInstance do
   describe "RedmineInstance.all" do
     it "returns fake directory" do
-      RtInstance.dir.should include("spec/data/rt")
+      expect(RtInstance.dir).to include("spec/data/rt")
     end
 
     it "returns all rt instances" do
       instances = RtInstance.all
-      instances.size.should eq 2
+      expect(instances.size).to eq 2
       instance = instances.detect{|i| i.name == "rt_client_01"}
-      instance.should be_a_kind_of RtInstance
-      instance.server.should eq "rt-01"
-      instance.nb_users.should eq 261
-      instance.no_method.should eq ""
+      expect(instance).to be_a_kind_of RtInstance
+      expect(instance.server).to eq "rt-01"
+      expect(instance.nb_users).to eq 261
+      expect(instance.no_method).to eq ""
     end
   end
 end

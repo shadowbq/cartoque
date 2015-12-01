@@ -9,9 +9,9 @@ describe "BackupJobs" do
   describe "GET /backup_jobs" do
     it "gets all jobs" do
       visit backup_jobs_path
-      page.status_code.should be 200
-      page.should have_content "srv-01"
-      page.should have_content "Manage exceptions"
+      expect(page.status_code).to be 200
+      expect(page).to have_content "srv-01"
+      expect(page).to have_content "Manage exceptions"
     end
   end
 end

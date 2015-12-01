@@ -5,24 +5,24 @@ describe Cronjob do
     it "parses a simple, standard cron line" do
       line = "00  05  *  *  *  root  /opt/scripts/my-own-script"
       cron = Cronjob.parse_line(line)
-      cron.should_not be_valid
+      expect(cron).not_to be_valid
       cron.server = FactoryGirl.create(:server)
-      cron.should be_valid
-      cron.frequency.should eq "00 05 * * *"
-      cron.user.should eq "root"
-      cron.command.should eq "/opt/scripts/my-own-script"
+      expect(cron).to be_valid
+      expect(cron.frequency).to eq "00 05 * * *"
+      expect(cron.user).to eq "root"
+      expect(cron.command).to eq "/opt/scripts/my-own-script"
     end
 
     it "parses a cron line with the definition location in first column" do
       line = "/etc/crontab 00  05  *  *  *  root  /opt/scripts/my-own-script"
       cron = Cronjob.parse_line(line)
-      cron.should_not be_valid
+      expect(cron).not_to be_valid
       cron.server = FactoryGirl.create(:server)
-      cron.should be_valid
-      cron.definition_location.should eq "/etc/crontab"
-      cron.frequency.should eq "00 05 * * *"
-      cron.user.should eq "root"
-      cron.command.should eq "/opt/scripts/my-own-script"
+      expect(cron).to be_valid
+      expect(cron.definition_location).to eq "/etc/crontab"
+      expect(cron.frequency).to eq "00 05 * * *"
+      expect(cron.user).to eq "root"
+      expect(cron.command).to eq "/opt/scripts/my-own-script"
     end
 
     it "parses a cron line with a special frequency" do
@@ -30,9 +30,9 @@ describe Cronjob do
       cron = Cronjob.parse_line(line)
       cron.server_id = FactoryGirl.create(:server).id
       cron.save!
-      cron.frequency.should eq "@reboot"
-      cron.user.should eq "root"
-      cron.command.should eq "/opt/scripts/my-own-script"
+      expect(cron.frequency).to eq "@reboot"
+      expect(cron.user).to eq "root"
+      expect(cron.command).to eq "/opt/scripts/my-own-script"
     end
 
     it "is not valid with 'strongly' invalid cron lines" do
@@ -43,7 +43,7 @@ describe Cronjob do
         "#* * * * * user commented cron",
         "@rebootz user invalid special frequency"
       ].each do |line|
-        Cronjob.parse_line(line).should_not be_valid
+        expect(Cronjob.parse_line(line)).not_to be_valid
       end
     end
 
@@ -54,9 +54,9 @@ describe Cronjob do
         c.server = server
         c
       end
-      crons.shift.should_not be_valid
-      crons.size.should eq 13
-      crons.map(&:valid?).uniq.should eq [true]
+      expect(crons.shift).not_to be_valid
+      expect(crons.size).to eq 13
+      expect(crons.map(&:valid?).uniq).to eq [true]
     end
   end
 end

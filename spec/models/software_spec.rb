@@ -9,8 +9,8 @@ end
 
 describe Software do
   it "has a name" do
-    Software.new.should_not be_valid
-    Software.new(name: "fakeapp").should be_valid
+    expect(Software.new).not_to be_valid
+    expect(Software.new(name: "fakeapp")).to be_valid
   end
 
   describe "Software.search" do
@@ -20,21 +20,21 @@ describe Software do
     end
 
     it "returns every software when query is blank or is not a string" do
-      Software.count.should_not eq(0)
-      Software.search(nil).length.should eq(Software.count)
-      Software.search("").length.should eq(Software.count)
+      expect(Software.count).not_to eq(0)
+      expect(Software.search(nil).length).to eq(Software.count)
+      expect(Software.search("").length).to eq(Software.count)
     end
 
     it "shouldn't be case sensitive" do
-      Software.search("App-01").length.should eq 1
+      expect(Software.search("App-01").length).to eq 1
     end
   end
 
   describe "Software#sorted_software_instances" do
     it "resists to empty arrays" do
       app = FactoryGirl.create(:software)
-      app.software_instances.should eq []
-      app.sorted_software_instances.should eq []
+      expect(app.software_instances).to eq []
+      expect(app.sorted_software_instances).to eq []
     end
 
     it "is ordered with prod, ecole, preprod first" do
@@ -46,22 +46,22 @@ describe Software do
       SoftwareInstance.create!(name: "prod", authentication_method: "none", software_id: app.id)
       SoftwareInstance.create!(name: "preprod", authentication_method: "none", software_id: app.id)
       app.reload
-      app.should have(6).software_instances
-      app.sorted_software_instances.map(&:name).should eq %w(prod ecole preprod aaaa ffff zzzz)
+      expect(app).to have(6).software_instances
+      expect(app.sorted_software_instances.map(&:name)).to eq %w(prod ecole preprod aaaa ffff zzzz)
     end
   end
 
   describe "#dokuwiki_pages" do
     it "returns no doc" do
       app = Software.new(name: "app-03")
-      app.dokuwiki_pages.should eq []
+      expect(app.dokuwiki_pages).to eq []
     end
 
     it "returns doc corresponding to */app_name/* or */app_name.txt" do
       app = Software.new(name: "app-01")
-      app.dokuwiki_pages.should have(2).docs
-      app.dokuwiki_pages.should include("app-01")
-      app.dokuwiki_pages.should include("app-01:doc")
+      expect(app.dokuwiki_pages.size).to eq(2)
+      expect(app.dokuwiki_pages).to include("app-01")
+      expect(app.dokuwiki_pages).to include("app-01:doc")
     end
 
     it "returns doc depending on linked software_urls" do
@@ -70,7 +70,7 @@ describe Software do
       app_url = SoftwareUrl.new(url: "http://app-02.example.com/index.php")
       app_instance.software_urls << app_url
       app.software_instances << app_instance
-      app.dokuwiki_pages.should eq ["app-02.example.com"]
+      expect(app.dokuwiki_pages).to eq ["app-02.example.com"]
     end
   end
 
@@ -82,8 +82,8 @@ describe Software do
 
     it "returns a map of relationships grouped by role" do
       map = app.relationships_map
-      map["not-a-key"].should == []
-      map[role.id.to_s].should == [ rel ]
+      expect(map["not-a-key"]).to eq([])
+      expect(map[role.id.to_s]).to eq([ rel ])
     end
   end
 
@@ -91,20 +91,20 @@ describe Software do
     let!(:app) { Software.create!(name: "Red girl", ci_identifier: "rdg") }
 
     it "accepts passing the slug" do
-      Software.find(app.slug).should == app
+      expect(Software.find(app.slug)).to eq(app)
     end
 
     it "accepts passing the ci_identifier" do
-      Software.find("rdg").should == app
+      expect(Software.find("rdg")).to eq(app)
     end
 
     it "prioritize the ci_identifier over the slug" do
       app2 = Software.create!(name: "Reddie", ci_identifier: app.slug)
-      Software.find(app.slug).should == app2
+      expect(Software.find(app.slug)).to eq(app2)
     end
 
     it "works with id" do
-      Software.find(app.id.to_s).should == app
+      expect(Software.find(app.id.to_s)).to eq(app)
     end
   end
 end

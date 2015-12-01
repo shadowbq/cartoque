@@ -2,28 +2,28 @@ require 'spec_helper'
 
 describe Role do
   it "requires presence of #name" do
-    Role.new.should_not be_valid
-    Role.new(name: "Blah").should be_valid
+    expect(Role.new).not_to be_valid
+    expect(Role.new(name: "Blah")).to be_valid
   end
 
   it "is unique by name" do
     Role.create!(name: "Blah")
-    Role.new(name: "Blah").should_not be_valid
+    expect(Role.new(name: "Blah")).not_to be_valid
   end
 
   it "doesn't alter position if provided" do
-    Role.new(name: "Blah", position: 37).position.should == 37
+    expect(Role.new(name: "Blah", position: 37).position).to eq(37)
   end
 
   it "is sorted by position asc by default" do
     Role.create!(name: "Two", position: 2)
     Role.create!(name: "One", position: 1)
-    Role.all.to_a.map(&:name).should == %w(One Two)
+    expect(Role.all.to_a.map(&:name)).to eq(%w(One Two))
   end
 
   it "auto increments position field" do
-    Role.count.should == 0
-    Role.create!(name: "One").position.should == 1
-    Role.create!(name: "Two").position.should == 2
+    expect(Role.count).to eq(0)
+    expect(Role.create!(name: "One").position).to eq(1)
+    expect(Role.create!(name: "Two").position).to eq(2)
   end
 end

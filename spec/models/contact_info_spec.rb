@@ -5,14 +5,14 @@ describe ContactInfo do
 
   it "has all fields to be valid" do
     info = EmailInfo.new
-    info.should_not be_valid
-    info.should have_exactly(2).errors
+    expect(info).not_to be_valid
+    expect(info).to have_exactly(2).errors
     info.entity = FactoryGirl.create(:contact)
     info.value = "555-123456"
-    info.should be_valid
+    expect(info).to be_valid
   end
 
   it "displays value when using #to_s" do
-    EmailInfo.new(value: "blah").to_s.should eq "blah"
+    expect(EmailInfo.new(value: "blah").to_s).to eq "blah"
   end
 end

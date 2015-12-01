@@ -7,7 +7,7 @@ describe "Components" do
   describe "GET /components" do
     it "list all components" do
       visit components_path
-      page.status_code.should be(200)
+      expect(page.status_code).to be(200)
     end
   end
 end

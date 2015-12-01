@@ -13,37 +13,37 @@ describe "Servers API" do
   describe "GET /servers.json" do
     it "gets all servers" do
       visit servers_path(format: "json")
-      page.status_code.should == 200
+      expect(page.status_code).to eq(200)
       res = JSON.parse(page.body) rescue nil
-      res.should_not be nil
-      res.keys.should == ["servers"]
-      res["servers"].should have(1).server
+      expect(res).not_to be nil
+      expect(res.keys).to eq(["servers"])
+      expect(res["servers"].size).to eq(1)
       srv = res["servers"].first
-      srv["name"].should == "srv-01"
-      srv["created_at"].should be_present
-      srv["updated_at"].should be_present
+      expect(srv["name"]).to eq("srv-01")
+      expect(srv["created_at"]).to be_present
+      expect(srv["updated_at"]).to be_present
     end
   end
 
   describe "GET /servers/:id" do
     it "shows a specific server" do
       visit server_path(id: server.id.to_s, format: "json")
-      page.status_code.should == 200
+      expect(page.status_code).to eq(200)
       res = JSON.parse(page.body) rescue nil
-      res.should_not be nil
-      res.keys.should == ["server"]
+      expect(res).not_to be nil
+      expect(res.keys).to eq(["server"])
       srv = res["server"]
-      srv["name"].should == "srv-01"
-      srv["created_at"].should be_present
-      srv["updated_at"].should be_present
+      expect(srv["name"]).to eq("srv-01")
+      expect(srv["created_at"]).to be_present
+      expect(srv["updated_at"]).to be_present
     end
 
     it "includes the operating system with the server" do
       visit server_path(id: server_with_os.id.to_s, format: "json")
-      page.status_code.should == 200
+      expect(page.status_code).to eq(200)
       res = JSON.parse(page.body)
       srv = res["server"]
-      srv["operating_system"]["name"].should == "Debian"
+      expect(srv["operating_system"]["name"]).to eq("Debian")
     end
   end
 end
